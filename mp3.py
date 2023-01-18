@@ -2,6 +2,10 @@ import numpy as np
 
 def make_mp3_analysisfb(h: np.ndarray, M: int) -> np.ndarray:
 	"""
+	h: protipi kroustiki apokrisi
+	M: arithmos zonon pou tha ginei o diaxorismos
+
+	H: LxM kathe stili einai h h kathe filtrou (M=32, L=512)
 	"""
 	H = np.zeros([len(h), M], dtype=np.float32)
 	for i in range(1, M + 1):
@@ -15,6 +19,10 @@ def make_mp3_analysisfb(h: np.ndarray, M: int) -> np.ndarray:
 
 def make_mp3_synthesisfb(h: np.ndarray, M: int) -> np.ndarray:
 	"""
+	h: protipi kroustiki apokrisi
+	M: arithmos zonon pou tha ginei o diaxorismos
+
+	H: LxM kathe stili einai h h kathe filtrou (M=32, L=512)
 	"""
 	H = make_mp3_analysisfb(h, M)
 	L = len(h)

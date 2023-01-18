@@ -2,6 +2,7 @@ import numpy as np
 
 def frame_sub_analysis(xbuff: np.ndarray, H: np.ndarray, q: int) -> np.ndarray:
 	"""
+	q = N (N=36)
 	"""
 	L, M = H.shape
 	ind = np.zeros([q, L])

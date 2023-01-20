@@ -1,4 +1,6 @@
 import numpy as np
+from frame import *
+from mp3 import *
 # xhat, Ytot = codec0(wavin, h, M, N)
 
 def codec0(wavin, h, M, N):
@@ -8,16 +10,13 @@ def codec0(wavin, h, M, N):
     M:          number of filters
     N:          number of samples
     """
+    H = make_mp3_analysisfb(h, M)
+
     samples = M*N
     iterations = (wavin.size)/samples
     for i in range(iterations):
-
-
-
-
-
-
-    x_buffer = [0 for i in range((N-1)*M + len(h))]
+        x_buffer = wavin[(i * samples) : (i * samples + samples - 1)]
+        
 
     print(x_buffer)
     print(np.shape(x_buffer))

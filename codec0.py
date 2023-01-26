@@ -14,9 +14,10 @@ def codec0(wavin, h, M, N):
 
     samples = M*N
     iterations = (wavin.size)/samples
+    q = 10 # something else
     for i in range(iterations):
         x_buffer = wavin[(i * samples) : (i * samples + samples - 1)]
-        
+        Y = frame_sub_analysis(x_buffer, H, q)
 
     print(x_buffer)
     print(np.shape(x_buffer))

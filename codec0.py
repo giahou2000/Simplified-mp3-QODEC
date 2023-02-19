@@ -23,7 +23,7 @@ def codec0(wavin, h, M, N):
 
     # buffer size
     q = (N-1)*M + L
-    Ytot = np.empty([int(iterations), N, M])
+    Ytot = np.empty([int(iterations)*N, M])
     print(f"Shape of Ytot: {np.shape(Ytot)}")
     xhat = []
     ytot_temp = np.empty((N,M))
@@ -41,9 +41,7 @@ def codec0(wavin, h, M, N):
         # print(f"Size of x_buffer: {np.shape(x_buffer)}")
         Y = frame_sub_analysis(x_buffer, H, N)
         Yc = donothing(Y)
-        # print(f"Hi! Shape of Yc: {np.shape(Yc)}")
-        # print(f"Shape of Ytot[i]: {np.shape(Ytot[i])}")
-        # Ytot[i] = np.append(Ytot[i], Yc, axis=0)
+        Ytot = np.append(Ytot, Yc, axis=0)
         Yh = idonothing(Yc)
         """"
         Some shit need to be done
@@ -51,7 +49,7 @@ def codec0(wavin, h, M, N):
         # ytot_temp = np.append(ytot_temp, Yc, axis=0)
         # Ytot[i] = np.concatenate((Ytot[i], Yc), axis=0)
         # Ytot = np.dstack((Ytot, Yc)).shape
-        Ytot = np.append(Ytot, np.atleast_3d(Yc), axis=2).shape
+        # Ytot = np.append(Ytot, np.atleast_3d(Yc), axis=2).shape
         xhat = np.append(xhat, frame_sub_synthesis(Yh, G))
     print(f"Shape of Ytot: {np.shape(Ytot)}")
     print(f"Shape of Yh: {np.shape(Yh)}")

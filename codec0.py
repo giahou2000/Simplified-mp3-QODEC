@@ -23,7 +23,8 @@ def codec0(wavin, h, M, N):
 
     # buffer size
     q = (N-1)*M + L
-    Ytot = np.empty([iterations*N, M])
+    Ytot = np.empty([0, M])
+    print(Ytot)
     print(f"Shape of Ytot: {np.shape(Ytot)}")
     xhat = []
     ytot_temp = np.empty((N,M))
@@ -33,30 +34,19 @@ def codec0(wavin, h, M, N):
         if (i == iterations - 1):
             x_buffer = wavin[(i * samples) : (((i+1) * samples))]
             x_buffer = np.pad(x_buffer, (0, padding), 'constant')
-            # print("If check")
         else: 
-            # print("Check")
             x_buffer = wavin[(i * samples) : (((i+1) * samples + L - M))]
         
-        # print(f"Size of x_buffer: {np.shape(x_buffer)}")
         Y = frame_sub_analysis(x_buffer, H, N)
         Yc = donothing(Y)
+        print(f"Shape of Yc: {np.shape(Yc)}")
         Ytot = np.append(Ytot, Yc, axis=0)
         Yh = idonothing(Yc)
-        """"
-        Some shit need to be done
-        """
-        # ytot_temp = np.append(ytot_temp, Yc, axis=0)
-        # Ytot[i] = np.concatenate((Ytot[i], Yc), axis=0)
-        # Ytot = np.dstack((Ytot, Yc)).shape
-        # Ytot = np.append(Ytot, np.atleast_3d(Yc), axis=2).shape
         xhat = np.append(xhat, frame_sub_synthesis(Yh, G))
     
-    """
-    GIA KAPOIO LOGO DIPLASIAZEI THN PROTI DIASTASI
-    """
     print(f"Shape of Ytot: {np.shape(Ytot)}")
     print(f"Shape of Yh: {np.shape(Yh)}")
+    print(f"Shape of xhat: {np.shape(xhat)}")
     return xhat, Ytot
 
     # Coder0 Implementation
@@ -69,7 +59,6 @@ def coder0(wavin, h, M, N):
     N:          number of samples
     """
     H = make_mp3_analysisfb(h, M)
-    G = make_mp3_synthesisfb(h, M)
     L = len(h)
     # H: 512 x 32
 
@@ -80,7 +69,7 @@ def coder0(wavin, h, M, N):
 
     # buffer size
     # q = (N-1)*M + L
-    Ytot = np.empty((iterations*N, M))
+    Ytot = np.empty((0, M))
     
     padding = L - M
     for i in range(iterations):
@@ -112,15 +101,19 @@ def decoder0(Ytot, h, M, N):
 
     # 4.a: Reading samples
     samples = M*N # 32X36
-    print(f"Shape of Ytot: {np.shape(Ytot)}")
-    # iterations = np.size(Ytot)/samples
-    print(f"Size of Ytot[0]: {len(Ytot[0])}")
-    iterations = int(len(Ytot[0]/(N*2)))
+
+    iterations = int(len(Ytot) / N)
     print(f"iterations: {iterations}")
     
-    xhat = []
-    for i in range(int(iterations)):
-        Yh = idonothing(Ytot[i*samples : i*samples + samples])
+    xhat = np.array(0)
+    for i in range(iterations):
+        """
+        upologismos Yc mesa apo Ytot
+        """
+        print(f"Shape of Ytot from decoder: {np.shape(Ytot)}")
+        print(Ytot[i*N, :])
+        Yh = idonothing(Ytot[i*N:(i*N + N), :])
+        print(f"Shape of Yh: {np.shape(Yh)}")
         xhat = np.append(xhat, frame_sub_synthesis(Yh, G))
 
     print("Decoder sucks as well!")  

@@ -18,18 +18,18 @@ def codec0(wavin, h, M, N):
 
     # 4.a: Reading samples
     samples = M*N # 32X36
-    iterations = (wavin.size)/samples
+    iterations = int((wavin.size)/samples)
     print(f"iterations: {iterations}")
 
     # buffer size
     q = (N-1)*M + L
-    Ytot = np.empty([int(iterations)*N, M])
+    Ytot = np.empty([iterations*N, M])
     print(f"Shape of Ytot: {np.shape(Ytot)}")
     xhat = []
     ytot_temp = np.empty((N,M))
 
     padding = L - M
-    for i in range(int(iterations)):
+    for i in range(iterations):
         if (i == iterations - 1):
             x_buffer = wavin[(i * samples) : (((i+1) * samples))]
             x_buffer = np.pad(x_buffer, (0, padding), 'constant')
@@ -71,15 +71,15 @@ def coder0(wavin, h, M, N):
 
     # 4.a: Reading samples
     samples = M*N # 32X36
-    iterations = (wavin.size)/samples
+    iterations = int((wavin.size)/samples)
     print(f"iterations: {iterations}")
 
     # buffer size
     # q = (N-1)*M + L
-    Ytot = []
+    Ytot = np.empty((iterations*N, M))
     
     padding = L - M
-    for i in range(int(iterations)):
+    for i in range(iterations):
         if (i == iterations - 1):
             x_buffer = wavin[(i * samples) : (((i+1) * samples))]
             x_buffer = np.pad(x_buffer, (0, padding), 'constant')
@@ -91,8 +91,8 @@ def coder0(wavin, h, M, N):
         # print(f"Size of x_buffer: {np.shape(x_buffer)}")
         Y = frame_sub_analysis(x_buffer, H, N)
         Yc = donothing(Y)
-        Ytot = np.append(Ytot, Yc)
-
+        Ytot = np.append(Ytot, Yc, axis=0)
+    print(f"Shape of Ytot1: {np.shape(Ytot)}")
     print("Coder sucks!")
     return Ytot
 

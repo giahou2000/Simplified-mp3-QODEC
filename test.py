@@ -37,3 +37,6 @@ iterations = (data.size)/samples
 # print(iterations)
 
 xhat, Ytot = codec0(data, h, M, N)
+
+Ytot_1 = coder0(data, h, M, N)
+xhat_1 = decoder0(Ytot_1, h, M, N)

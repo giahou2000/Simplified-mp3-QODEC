@@ -12,8 +12,10 @@ def codec0(wavin, h, M, N):
     """
     H = make_mp3_analysisfb(h, M)
 
+    # 4.a: Reading samples
     samples = M*N
     iterations = (wavin.size)/samples
+    print(iterations)
     q = 10 # something else
     for i in range(iterations):
         x_buffer = wavin[(i * samples) : (i * samples + samples - 1)]
@@ -21,6 +23,8 @@ def codec0(wavin, h, M, N):
 
     print(x_buffer)
     print(np.shape(x_buffer))
+
+    # return xhat, Ytot
 
 # Testing
 codec0(0, [1, 2, 3], 32, 36)

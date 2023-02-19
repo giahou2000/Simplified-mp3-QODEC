@@ -51,6 +51,10 @@ def codec0(wavin, h, M, N):
         # Ytot = np.dstack((Ytot, Yc)).shape
         # Ytot = np.append(Ytot, np.atleast_3d(Yc), axis=2).shape
         xhat = np.append(xhat, frame_sub_synthesis(Yh, G))
+    
+    """
+    GIA KAPOIO LOGO DIPLASIAZEI THN PROTI DIASTASI
+    """
     print(f"Shape of Ytot: {np.shape(Ytot)}")
     print(f"Shape of Yh: {np.shape(Yh)}")
     return xhat, Ytot
@@ -108,7 +112,10 @@ def decoder0(Ytot, h, M, N):
 
     # 4.a: Reading samples
     samples = M*N # 32X36
-    iterations = np.size(Ytot)/samples
+    print(f"Shape of Ytot: {np.shape(Ytot)}")
+    # iterations = np.size(Ytot)/samples
+    print(f"Size of Ytot[0]: {len(Ytot[0])}")
+    iterations = int(len(Ytot[0]/(N*2)))
     print(f"iterations: {iterations}")
     
     xhat = []

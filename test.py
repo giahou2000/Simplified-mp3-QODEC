@@ -113,15 +113,15 @@ xhat_1 = decoder0(Ytot_1, h, M, N)
 3.1.7a: Compare the 2 signals(sound files)
 """
 # Original file test
-winsound.PlaySound('myfile.wav', winsound.SND_FILENAME)
+# winsound.PlaySound('myfile.wav', winsound.SND_FILENAME)
 
 # Test file after applying the codec
 out = wave.open("sound.wav", "wb")
 out.setnchannels(1)
 out.setsampwidth(2) # number of bytes
 out.setframerate(samplerate)
-out.writeframesraw(xhat)
-# winsound.PlaySound('sound.wav', winsound.SND_FILENAME)
+out.writeframesraw(np.int16(xhat))
+winsound.PlaySound('sound.wav', winsound.SND_FILENAME)
 
 """
 3.1.7b: Compute the SNR of error: x - xhat
@@ -132,7 +132,7 @@ shifted_data = np.copy(data[shift:])
 print(data.size)
 print(xhat.size)
 print(xhat_1.size)
-diff = data - xhat
+diff = shifted_data - np.int16(shifted_xhat)
 # Preparing the figure
 plt.figure(figsize=(10,5))
 plt.plot(diff)

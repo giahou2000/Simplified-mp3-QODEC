@@ -119,5 +119,7 @@ winsound.PlaySound('myfile.wav', winsound.SND_FILENAME)
 out = wave.open("sound.wav", "wb")
 out.setnchannels(1)
 out.setsampwidth(2) # number of bytes
-out.setframerate(44100)
+out.setframerate(samplerate)
 out.writeframesraw(data)
+
+winsound.PlaySound('sound.wav', winsound.SND_FILENAME)

@@ -116,10 +116,20 @@ xhat_1 = decoder0(Ytot_1, h, M, N)
 winsound.PlaySound('myfile.wav', winsound.SND_FILENAME)
 
 # Test file after applying the codec
-out = wave.open("sound.wav", "wb")
-out.setnchannels(1)
-out.setsampwidth(2) # number of bytes
-out.setframerate(samplerate)
-out.writeframesraw(data)
+# out = wave.open("sound.wav", "wb")
+# out.setnchannels(1)
+# out.setsampwidth(2) # number of bytes
+# out.setframerate(samplerate)
+# out.writeframesraw(xhat_1)
+# winsound.PlaySound('sound.wav', winsound.SND_FILENAME)
 
-winsound.PlaySound('sound.wav', winsound.SND_FILENAME)
+"""
+3.1.7b: Compute the SNR of error: x-xhat
+"""
+print(data.size)
+print(xhat.size)
+diff = data - xhat
+# Preparing the figure
+plt.figure(figsize=(10,5))
+plt.plot(diff)
+plt.show()

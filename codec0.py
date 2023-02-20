@@ -41,7 +41,7 @@ def codec0(wavin, h, M, N):
             x_buffer = wavin[(i * samples) : (((i+1) * samples))]
             x_buffer = np.pad(x_buffer, (0, padding), 'constant')
         else: 
-            x_buffer = wavin[(i * samples) : (((i+1) * samples + L - M))]
+            x_buffer = wavin[(i * samples) : (((i+1) * samples + padding))]
         
         # 3.1.4.b: Computation of the frame Y
         Y = frame_sub_analysis(x_buffer, H, N)

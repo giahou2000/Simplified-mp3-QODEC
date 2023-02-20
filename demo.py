@@ -68,6 +68,9 @@ freq = fft.rfftfreq(n, timestep)
 for i in range(M):
     plt.plot(freq, fft_h_db[i])
 
+plt.title("Prototype Impulse Response")
+plt.xlabel("frequency in Hertz (Hz)")
+plt.ylabel("Amplitude of each h_i")
 plt.show()
 
 """
@@ -88,9 +91,13 @@ plt.figure(figsize=(10,5))
 for i in range(M):
     plt.plot((bark), fft_h_db[i])
 
+plt.title("Prototype Impulse Response")
+plt.xlabel("frequency in Barks")
+plt.ylabel("Amplitude of each h_i")
 plt.show()
 
 """
+codec0, coder0 and decoder0 are implemented in codec0.py
 3.1.4: Call codec0
 """
 N = 36
@@ -112,16 +119,17 @@ xhat_1 = decoder0(Ytot_1, h, M, N)
 """
 3.1.7a: Compare the 2 signals(sound files)
 """
-# Original file test
-# winsound.PlaySound('myfile.wav', winsound.SND_FILENAME)
+# Original file test. Uncomment the following line
+# winsound.PlaySound('myfile.wav', winsound.SND_FILENAME) 
 
 # Test file after applying the codec
+# uncomment line 132 to listen
 out = wave.open("sound.wav", "wb")
 out.setnchannels(1)
 out.setsampwidth(2) # number of bytes
 out.setframerate(samplerate)
 out.writeframesraw(np.int16(xhat))
-winsound.PlaySound('sound.wav', winsound.SND_FILENAME)
+# winsound.PlaySound('sound.wav', winsound.SND_FILENAME) 
 
 """
 3.1.7b: Compute the SNR of error: x - xhat
@@ -133,7 +141,9 @@ print(data.size)
 print(xhat.size)
 print(xhat_1.size)
 diff = shifted_data - np.int16(shifted_xhat)
+
 # Preparing the figure
 plt.figure(figsize=(10,5))
 plt.plot(diff)
+plt.title("x - x_hat")
 plt.show()
